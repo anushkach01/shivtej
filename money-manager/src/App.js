@@ -127,7 +127,7 @@ function App() {
       </div>
       <div className="toggle-form">
         <span className='span'>
-          {isSignup ? 'Already have an account? ' : "Don't have an account? "}
+          {isSignup ? 'Already have an account? ' : "Don't have an account?"}
           <button onClick={() => setIsSignup(!isSignup)}>
             {isSignup ? 'Login' : 'Signup'}
           </button>
