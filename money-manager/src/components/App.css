@@ -1,0 +1,361 @@
+/* General body and page setup */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #000000;
+  margin: 4rem 0 3rem 0;
+}
+
+.login-form {
+  background-color: #000000;
+  border: 2px solid gray;
+  color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  width: 280px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #414244;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+button:hover {
+  background-color: #000000;
+  color: white;
+  border: 1px solid gray;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Toggle form style */
+.toggle-form {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.toggle-form span {
+  font-size: 14px;
+  color: #555;
+}
+
+.toggle-form button {
+  border: 1px solid gray;
+  width: 100px;
+  border-radius: 6px;
+  background-color: black;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toggle-form button:hover {
+  text-decoration: none;
+}
+
+/* Email field specific styling */
+input[type="email"] {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* General input field styling */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 80%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.sideSection {
+  border: 2px solid white;
+  padding: 12px;
+  font-size: 24px;
+  background-color: rgb(78, 76, 76);
+  color: white;
+  position: fixed; /* Fixes the sidebar on the left */
+  top: 0;
+  width: 250px; /* Width of the sidebar */
+  height: 100vh; /* Full screen height */
+  color: white;
+  padding-top: 20px;
+  padding-left: 20px;
+}
+.sideSection li {
+  list-style-type: none;
+}
+ul {
+  cursor: pointer;
+  font-weight: 600;
+}
+ul:hover{
+  color: #171717;
+  font-weight: 800;
+
+}
+.conatiner{
+  display: flex;
+  justify-content: center;
+}
+.mainSection {
+  width: 100%;
+  margin-left: 250px;
+  padding: 4rem;
+  gap: 24px;
+}
+.btn {
+  width: 150px;
+}
+
+.newBankSectionModal {
+  position: fixed; 
+  top: 40%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  background-color: rgb(59, 58, 58);
+  padding: 0 3.5rem 3rem 3rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1; 
+  width: 600px; 
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.endDetails{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+input {
+  padding: 12px;
+  margin: 12px 0;
+  width: 500px;
+}
+
+.formData label{
+  
+  font-size: 24px;
+}
+
+.closeIcon {
+  border-radius: 70%;
+  cursor: pointer;
+  padding: 12px;
+}
+.closeIcon:hover{
+  font-size: 24px;
+  color: #000000;
+}
+
+.select {
+  padding: 12px;
+  margin: 12px 0;
+  width: 300px;
+}
+
+.footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 12px;
+  
+}
+
+.updatedBankDetails{
+  border: 2px solid white;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 600px;
+  padding: 16px;
+  gap: 24px;
+  margin: 24px 0;
+}
+.startDetails{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+}
+
+
+.dashBoardContent{
+  width: 350px;
+  padding: 1rem;
+  border: 2px solid rgb(223, 219, 219);
+  background-color: #414244;
+  border-radius: 10px;
+  margin-top: 3rem;
+  
+}
+.mainDashboardContent{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 300px;
+}
+
+.dashBoardContent2{
+  width: 350px;
+  padding: 1rem;
+  border: 2px solid rgb(223, 219, 219);
+  background-color: #414244;
+  border-radius: 10px;
+  margin-top: 3rem;
+  display: flex;
+}
+.mainDashboardContent2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 300px;
+}
+
+.categories{
+  margin-left: 250px;
+  padding: 4rem;
+  gap: 24px;
+}
+
+.category-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.ModalData{
+  border: 2px solid rgb(9, 9, 9);
+  padding: 16px;
+  width: 700px;
+  position: fixed; 
+  top: 50%; 
+  left: 55%; 
+  transform: translate(-50%, -50%);
+  background-color: rgb(59, 58, 58);
+  padding: 0 3.5rem 3rem 3rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1; 
+}
+
+.categoryHeader{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tabs{
+  border: 2px solid rgb(48, 48, 49);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  background-color: #414244;
+}
+.unorderList {
+  padding: 12px 0;
+} 
+
+.transactions {
+  margin-left: 300px;
+}
+
+.transaction-content{
+  display: flex;
+  flex-direction: row;
+  margin-top: 3rem;
+  justify-content: space-between;
+  padding: 0px 24px;
+}
+.transactionSection1{
+  position: fixed; 
+  top: 40%; 
+  left: 50%; 
+  transform: translate(-50%, -50%);
+  background-color: rgb(59, 58, 58);
+  padding: 0 3.5rem 3rem 3rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1; 
+  width: 600px;
+}
+
+table {
+  border-spacing: 20px;
+}
+
+th {
+  background-color: #373737;  /* Adds a background color to table headers */
+  padding: 10px;
+  font-size: 20px;
+}
+
+td{
+  padding: 10px;
+  font-size: 20px;
+}

@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Dashboard from './Dashboard';
 
-function App() {
+function LoginPage() {
+
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -30,7 +36,8 @@ function App() {
 
     if (email === 'anushka@example.com' && username === 'anushka' && password === 'anushka123') {
       alert('Login Successful!');
-      // Redirect to a different page, e.g., using React Router
+      console.log("hey");
+      navigate('/Dashboard')
     } else {
       setError('Invalid credentials');
     }
@@ -137,4 +144,4 @@ function App() {
   );
 }
 
-export default App;
+export default LoginPage;
