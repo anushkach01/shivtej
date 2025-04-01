@@ -123,7 +123,7 @@ const Transactions = () => {
                 <tr>
                   <th>Transaction Type</th>
                   <th>Description</th>
-                  <th>Bank ID</th>
+                  <th>Bank Name</th>
                   <th>Date</th>
                   <th>Amount</th>
                 </tr>

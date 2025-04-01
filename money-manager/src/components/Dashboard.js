@@ -37,7 +37,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchBalanceDetails2 = async () => {
       try {
-        const response = await fetch('https://money-manager-backend-bsdc.onrender.com/dashboard/income-expense?token=d');
+        const response = await fetch('https://money-manager-backend-bsdc.onrender.com/dashboard/income-expense?start_date=2025-01-01&end_date=2025-01-31&token=q');
         const data = await response.json();
         
         if (data && data.result) {

@@ -13,13 +13,18 @@ const Banks = () => {
     console.log("open modal");
     e.preventDefault();
     setShowBankAccountModal(true);
-    setFormData({})
+    setFormData({});
   };
 
-  const onEditClickHandler = (e) => {
-    console.log("open modal for edit");
+  const onEditClickHandler = (bank) => {
+    console.log("open modal for edit", bank);
     setShowBankAccountModalToUpdate(true);
-    
+    setFormData({
+      bankName: bank.bankName,
+      type: bank.type,
+      balance: bank.balance,
+      bankId: bank.bankId  // Store the bank ID to identify which bank is being updated
+    });
   };
 
   const onCloseModalHandler = () => {
@@ -37,14 +42,28 @@ const Banks = () => {
 
   const onApiSuccess = () => {
     console.log(formData);
+
     const payload = {
       bank_name: formData.bankName,
       account_type: formData.type,
       total_balance: formData.balance
     };
-    console.log("payload", payload);
-    fetch('https://money-manager-backend-bsdc.onrender.com/api/bank/?token=D', {
-      method: 'POST',
+
+    // If it's an update, send the bank ID as well
+    const apiUrl = showBankAccountModalToUpdate
+      ? `https://money-manager-backend-bsdc.onrender.com/api/bank/${formData.bankId}?token=q` // For update (PUT)
+      : `https://money-manager-backend-bsdc.onrender.com/api/bank/?token=D`; // For add (POST)
+
+    const method = showBankAccountModalToUpdate ? 'PUT' : 'POST'; // Choose method (PUT for update, POST for add)
+
+    // If it's an update, include the bankId in the payload
+    if (showBankAccountModalToUpdate) {
+      payload.bank_id = formData.bankId;
+    }
+
+    // API call: If it's an update, use PUT, otherwise POST for adding
+    fetch(apiUrl, {
+      method: method,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -53,25 +72,25 @@ const Banks = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log('Success:', data);
-        if (data.is_success ) {
-          setShowBankAccountModal(false);
-          // setBankDetails([])
-          // // Assuming the response contains the updated list of bank details
-          setBankDetails(data.result.map((value) => ({
+        if (data.is_success) {
+          setShowBankAccountModal(false); // Close the modal after successful action
+          setShowBankAccountModalToUpdate(false); // Close the update modal as well
+          // Assuming the response contains the updated list of bank details
+          const updatedBankDetails = data.result.map((value) => ({
             bankName: value.bank_name,
             type: value.account_type,
-            balance: value.total_balance
-          })));
-          console.log(bankDetails, bankDetails)
+            balance: value.total_balance,
+            bankId: value.bank_id // Assuming `bank_id` is returned in the response
+          }));
+          setBankDetails(updatedBankDetails); // Update the state with new bank details
+          console.log(updatedBankDetails); // Log the updated data
         } else {
-          console.error('Failed to add bank:', data.message);
+          console.error('Failed to add or update bank:', data.message);
         }
       })
       .catch((error) => {
         console.error('Error posting bank details:', error);
       });
-
-    setShowBankAccountModal(false); // Close the modal after POST
   };
 
   useEffect(() => {
@@ -85,7 +104,8 @@ const Banks = () => {
           setBankDetails(data.result.map((value) => ({
             bankName: value.bank_name,
             type: value.account_type,
-            balance: value.total_balance
+            balance: value.total_balance,
+            bankId: value.bank_id // Store the bank ID here
           })));
         }
       } catch (error) {
@@ -99,6 +119,8 @@ const Banks = () => {
     console.log('Selected Account Type:', formData.type); // Log selected account type
   }, [formData.type]); // Runs whenever formData.type changes
 
+  console.log("bankDetails", bankDetails.length)
+
   return (
     <div className='container'>
       <Sidebar />
@@ -106,7 +128,7 @@ const Banks = () => {
         <h1>Banks</h1>
 
         <p>Connected Accounts</p>
-        {bankDetails.length > 0 ?? (
+        {bankDetails.length > 0 ? (
           bankDetails.map((bank, index) => (
             <div key={index} className='updatedBankDetails'>
               <div className='startDetails'>
@@ -115,10 +137,15 @@ const Banks = () => {
               </div>
               <div className='endDetails'>
                 <h3>{bank.balance}</h3>
-                <FontAwesomeIcon icon={faPenToSquare} onClick={onEditClickHandler} />
+                <FontAwesomeIcon 
+                  icon={faPenToSquare} 
+                  onClick={() => onEditClickHandler(bank)} // Pass the bank object to the handler
+                />
               </div>
             </div>
           ))
+        ) : (
+          <p>No bank accounts found</p>
         )}
 
         <div className='addNewBankSection'>
@@ -130,21 +157,36 @@ const Banks = () => {
       {(showBankAccountModal || showBankAccountModalToUpdate) && (
         <div className='newBankSectionModal'>
           <div className='header'>
-            <h1>Link a bank account</h1>
+            <h1>{showBankAccountModalToUpdate ? 'Update a bank account' : 'Link a bank account'}</h1>
             <span onClick={onCloseModalHandler} className='closeIcon'>X</span>
           </div>
-          <form className='formData' onSubmit={onApiSuccess} >
+          <form className='formData' onSubmit={onApiSuccess}>
             <label>Bank name</label>
-            <input placeholder='Enter bank name' name="bankName" value={formData.bankName} onChange={handleInputChange} />
+            <input 
+              placeholder='Enter bank name' 
+              name="bankName" 
+              value={formData.bankName || ''} 
+              onChange={handleInputChange} 
+            />
 
             <label>Account Type</label>
-            <select name="type" className='select' value={formData.type} onChange={handleInputChange}>
+            <select 
+              name="type" 
+              className='select' 
+              value={formData.type || ''} 
+              onChange={handleInputChange}
+            >
               <option value="current">Current</option>
               <option value="savings">Savings</option>
             </select>
 
             <label>Total balance</label>
-            <input placeholder='₹ 0.00' name="balance" value={formData.balance} onChange={handleInputChange} />
+            <input 
+              placeholder='₹ 0.00' 
+              name="balance" 
+              value={formData.balance || ''} 
+              onChange={handleInputChange} 
+            />
           </form>
           <div className='footer'>
             <button className='btn' onClick={onCloseModalHandler}>Cancel</button>

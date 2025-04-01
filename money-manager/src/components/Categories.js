@@ -39,25 +39,27 @@ const Categories = () => {
   const [activeTab, setActiveTab] = useState('EXPENSE'); // Default active tab
   const [showSubcategorySection, setShowSubcategorySection] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
+  const [incomeData, setIncomeData] = useState([]); // For Income categories
 
-  // Fetch category data
+  // Fetch category data (Expense and Income)
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
         const response = await fetch('https://money-manager-backend-bsdc.onrender.com/api/categories/?token=hj');
         const data = await response.json();
         if (data) {
-          // Use compact to ensure no falsy values are in the categoryData array
-          setCategoryData(
-            compact(
-              data.result.map((value) => {
-                if (value.type_of.toLowerCase() === 'expense') {
-                  return value.category_name;
-                }
-                return null; // If the category type is not 'expense', return null to be filtered out
-              })
-            )
+          const expenseCategories = compact(
+            data.result
+              .filter((value) => value.type_of.toLowerCase() === 'expense')
+              .map((value) => value.category_name)
           );
+          const incomeCategories = compact(
+            data.result
+              .filter((value) => value.type_of.toLowerCase() === 'income')
+              .map((value) => value.category_name)
+          );
+          setCategoryData(expenseCategories);
+          setIncomeData(incomeCategories);
         }
       } catch (error) {
         console.error('Error fetching category data:', error);
@@ -65,7 +67,7 @@ const Categories = () => {
     };
 
     fetchCategoryData();
-  }, []);
+  }, []); // Only call once on mount
 
   // Handle tab click
   const handleTabClick = (tabName) => {
@@ -89,34 +91,10 @@ const Categories = () => {
     setShowSubcategorySection(true);
   };
 
-  const handleOnClickOfAddBtn = (e) => {
-  }
-
-  useEffect(() => {
-    const fetchCategoryData = async () => {
-      try {
-        const response = await fetch('https://money-manager-backend-bsdc.onrender.com/api/categories/?token=f');
-        const data = await response.json();
-        if (data) {
-          // Use compact to ensure no falsy values are in the categoryData array
-          setCategoryData(
-            compact(
-              data.result.map((value) => {
-                if (value.type_of.toLowerCase() === 'expense') {
-                  return value.category_name;
-                }
-                return null; // If the category type is not 'expense', return null to be filtered out
-              })
-            )
-          );
-        }
-      } catch (error) {
-        console.error('Error fetching category data:', error);
-      }
-    };
-
-    fetchCategoryData();
-  }, []);
+  const handleOnClickOfAddBtn = () => {
+    // Handle add new category form submission (still empty in your original code)
+    console.log('Category added');
+  };
 
   const tabs = [
     {
@@ -159,7 +137,7 @@ const Categories = () => {
         </div>
         <div className="tabs">
           <Tabs tabs={tabs} className='tabs' activeTab={activeTab} onTabClick={handleTabClick} />
-          <TabContent activeTab={activeTab} tabs={tabs} categoryData={categoryData} />
+          <TabContent activeTab={activeTab} tabs={tabs} categoryData={activeTab === 'EXPENSE' ? categoryData : incomeData} />
         </div>
         {showAddNewModal && (
           <div className="ModalData">
